@@ -393,14 +393,3 @@ sealed class AudioSource {
 
 ---
 
-## Key Design Decisions
-
-| Decision | Rationale |
-|---|---|
-| Zero third-party libraries | Requirement constraint; also reduces APK size and attack surface |
-| `AudioDeviceCallback` instead of polling | Instant response to hardware changes; no battery drain |
-| `StateFlow` for device list and playback state | Compose-friendly reactive updates; UI always reflects truth |
-| Pending TTS request queue | Handles the async TTS init gap — no requests are silently dropped |
-| Save/restore AudioManager state | Ensures speaker forcing does not break other apps after playback |
-| Speaker always synthesized | Some ROMs omit `TYPE_BUILTIN_SPEAKER` from `getDevices()` output; the app guarantees it is always present |
-| `QUEUE_FLUSH` in TTS speak | Cancels any in-progress utterance before starting new text — prevents audio overlap |
